@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stark.ai Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #222;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 30px;
+            margin-right: 10px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+        }
+        .auth-buttons button {
+            margin-left: 10px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .discover-btn {
+            background-color: #ff9800;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #fff;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+        .login { border: 1px solid #333; background: transparent; color: #333; }
+        .signup { background: #007bff; color: white; border: none; }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            width: 300px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .modal-content input {
+            width: 90%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .modal-content button {
+            background: #007bff;
+            color: white;
+            padding: 8px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+        .close-btn {
+            float: right;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .hero1 {
+            background: linear-gradient(135deg, #f9f9f9, #eef1f6);
+            color: black;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .upload-box {
+            text-align: center;
+            background: white;
+            border: 2px dashed #007bff;
+            padding: 40px;
+            width: 50%;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .upload-box p {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        .upload-box .upload-icon {
+            font-size: 40px;
+            color: #555;
+        }
+        .upload-label {
+            display: block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: 2px solid #007bff;
+            color: #007bff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .upload-label:hover { background: #007bff; color: #fff; }
+        .output-box {
+            display: none;
+            text-align: center;
+            background: white;
+            border: 2px solid #007bff;
+            padding: 20px;
+            width: 50%;
+            margin: 20px auto;
+            border-radius: 10px;
+        }
+        @media (max-width: 768px) { .upload-box, .output-box { width: 90%; } }
+        .features {
+            text-align: center;
+            padding: 50px;
+        }
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+        .feature-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .feature-card h2 { font-size: 18px; }
+        .feature-card p { font-size: 16px; color: #666; }
+        .footer {
+            background-color: #1c1c1c;
+            color: white;
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .footer .column { width: 25%; }
+        .footer .column h3 { margin-bottom: 10px; }
+        .footer .column ul { list-style: none; padding: 0; }
+        .footer .column ul li { margin-bottom: 8px; }
+        .footer .column ul li a { color: white; text-decoration: none; }
+        .footer .contact { display: flex; flex-direction: column; }
+        .footer .social-icons { margin-top: 10px; }
+        .footer .social-icons a {
+            margin-right: 10px;
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+        }
+        .features {
+            text-align: center;
+            padding: 50px;
+        }
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+        .feature-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .feature-card h2 {
+            font-size: 18px;
+        }
+        .feature-card p {
+            font-size: 16px;
+            color: #666;
+        }
+        .footer {
+            background-color: #1c1c1c;
+            color: white;
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .footer .column {
+            width: 25%;
+        }
+        .footer .column h3 {
+            margin-bottom: 10px;
+        }
+        .footer .column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer .column ul li {
+            margin-bottom: 8px;
+        }
+        .footer .column ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        .footer .contact {
+            display: flex;
+            flex-direction: column;
+        }
+        .footer .social-icons {
+            margin-top: 10px;
+        }
+        .footer .social-icons a {
+            margin-right: 10px;
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <img src="https://images.assets.stark.ai/image/stark-256.png" alt="Stark.ai"> Stark.ai
+    </div>
+    <div class="nav-links">
+        <a href="#">Instant Interviews</a>
+        <a href="#">Copilot</a>
+        <a href="#">Features</a>
+        <button class="discover-btn">Discover More ▼</button>
+    </div>
+    <div class="auth-buttons">
+        <button class="login" onclick="openModal('loginModal')">Login</button>
+        <button class="signup" onclick="openModal('signupModal')">Signup</button>
+    </div>
+    
+</nav>
+
+<header class="hero1">
+    <div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
+        <h3>Login</h3>
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <button>Login</button>
+    </div>
+</div>
+
+<!-- Signup Modal -->
+<div id="signupModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('signupModal')">&times;</span>
+        <h3>Signup</h3>
+        <input type="text" placeholder="Full Name">
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <button>Sign Up</button>
+    </div>
+</div>
+    <div class="hero">
+        <h1>Get Noticed, Get Hired</h1>
+        <h1>5X More Interviews with Stark AI</h1>
+        <p>Join <span>1M+ Job Seekers</span> Who've Transformed Their Careers with Stark AI.</p>
+    </div>
+    <div class="upload-box">
+        <div class="upload-icon">☁</div>
+        <p><strong>Upload Resume</strong></p>
+        <p>Drag or click to upload</p>
+        <input type="file" id="resumeUpload" accept=".pdf,.doc,.docx" style="display: none;">
+        <label for="resumeUpload" class="upload-label">Choose File</label>
+        <p id="fileName"></p>
+    </div>
+
+    <div id="outputBox" class="output-box">
+        <h3>Analysis Results</h3>
+            <p><strong>Job Suggestions:</strong> <span id="jobSuggestions">Loading...</span></p>
+            <p><strong>Strengths:</strong> <span id="strengths">Analyzing...</span></p>
+            <p><strong>Weaknesses:</strong> <span id="weaknesses">Evaluating...</span></p>
+            <p><strong>Summary:</strong> <span id="summary">Generating summary...</span></p>
+    </div>
+</header>
+
+<script>
+    function openModal(id) {
+        document.getElementById(id).style.display = "flex";
+    }
+    function closeModal(id) {
+        document.getElementById(id).style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = "none";
+        }
+    }
+    document.getElementById('resumeUpload').addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            document.getElementById('fileName').textContent = 'Selected File: ${file.name}';
+            document.getElementById('outputBox').style.display = 'block';
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('http://127.0.0.1:5000/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('jobSuggestions').textContent = data.jobSuggestions || 'No suggestions available.';
+                document.getElementById('strengths').textContent = data.strengths || 'No strengths provided.';
+                document.getElementById('weaknesses').textContent = data.weaknesses || 'No weaknesses provided.';
+                document.getElementById('summary').textContent = data.summary || 'No summary provided.';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to analyze the resume.');
+            });
+        } else {
+            document.getElementById('fileName').textContent = "";
+            document.getElementById('outputBox').style.display = 'none';
+        }
+    });
+</script>
+
+<section class="features">
+    <h1>Revolutionary Features of Stark.ai</h1>
+    <div class="feature-cards">
+        <div class="feature-card">
+            <h2>Instant Interviews – Your Career, No Waiting!</h2>
+            <p>Skip the wait! Stark.ai connects you directly with top companies for instant interviews, all aligned with your resume.</p>
+            <a href="#">Start Now →</a>
+        </div>
+        <div class="feature-card">
+            <h2>Ace Your Next Interview with AI-Powered Practice</h2>
+            <p>Step into your next interview with confidence! Our AI-driven mock interviews provide personalized feedback.</p>
+            <a href="#">Start practicing today →</a>
+        </div>
+        <div class="feature-card">
+            <h2>Career Guru – Your AI-Powered Career Coach</h2>
+            <p>Navigate your career with confidence! Career Guru provides personalized advice and actionable insights.</p>
+            <a href="#">Shape your future →</a>
+        </div>
+        <div class="feature-card">
+            <h2>Meet Your Career Copilot – Smarter, Faster, Effortless</h2>
+            <p>Unlock your potential with instant job matches, bulk applications, and AI-generated cover letters.</p>
+            <a href="#">Find Your Match Now →</a>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+  <div class="column">
+      <h3>Features</h3>
+      <ul>
+          <li><a href="#">Copilot</a></li>
+          <li><a href="#">Career Guru</a></li>
+          <li><a href="#">AI Scoring</a></li>
+          <li><a href="#">AI Mock Interview</a></li>
+      </ul>
+  </div>
+  <div class="column">
+      <h3>Solutions</h3>
+      <ul>
+          <li><a href="#">Employers</a></li>
+          <li><a href="#">Colleges</a></li>
+          <li><a href="#">Staffing</a></li>
+          <li><a href="#">Careers</a></li>
+      </ul>
+  </div>
+  <div class="column">
+      <h3>Company</h3>
+      <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Blogs</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+      </ul>
+  </div>
+  <div class="column contact">
+      <h3>Contact Us</h3>
+      <p>📞 +91-83339-09630</p>
+      <p>✉ support@stark.ai</p>
+      <div class="social-icons">
+          <a href="#">🔗</a>
+          <a href="#">𝕏</a>
+          <a href="#">📘</a>
+          <a href="#">📷</a>
+      </div>
+  </div>
+</footer>
+
+</body>
+</html>
