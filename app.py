@@ -28,7 +28,7 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 # Configure Google Gemini API Key
-GENAI_API_KEY = ("AIzaSyBWU4-AwYbyDpJ8l0gut91zBj7bSn_fPv0")
+GENAI_API_KEY = ("YOUR_API_KEY")
 if not GENAI_API_KEY:
     raise ValueError("Google Gemini API key is missing in the .env file")
 genai.configure(api_key=GENAI_API_KEY)
